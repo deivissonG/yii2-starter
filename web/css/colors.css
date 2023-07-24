@@ -1,0 +1,25 @@
+:root {
+    --theme-primary: #0965e8;
+    --theme-primary-light: #e4edf8;
+    --theme-secondary: #72727e;
+    --theme-secondary-subtle: #e6e6e6;
+    --theme-danger: #b41212;
+}
+
+[data-bs-theme="light"] .bg-secondary-subtle {
+    background-color: var(--theme-secondary-subtle) !important;
+}
+
+[data-bs-theme="dark"] {
+    --sidebar-hover-color: rgba(82, 82, 82, 0.78);
+    --table-header-color: linear-gradient( to bottom, rgba(33, 68, 91, 0.3) 0, #0000000f 100%);
+    /*    BOOSTRAP OVERRIDES    */
+    --bs-table-bg: #1f1f1f !important;
+    --bs-light: #3a3939 !important;
+    --bs-light-rgb: 58, 57, 57 !important;
+}
+
+[data-bs-theme="dark"] .table-warning {
+    --bs-table-bg: #3a3939;
+    --bs-table-border-color: #3a3939;
+}

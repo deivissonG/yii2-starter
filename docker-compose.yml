@@ -1,9 +1,23 @@
 version: '2'
 services:
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    volumes:
+      - /var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --max_connections=1024
+    env_file:
+      - .env-db
+    ports:
+      - '33061:3306'
   php:
-    image: yiisoftware/yii2-php:7.4-apache
+    image: yiisoftware/yii2-php:8.0-fpm-nginx
     volumes:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       - ./:/app:delegated
+    env_file:
+      - .env-app
     ports:
       - '8000:80'
+      - '8001:443'
+    command: bash -c "composer install && php yii migrate --interactive=0 && supervisord -c /etc/supervisor/supervisord.conf"

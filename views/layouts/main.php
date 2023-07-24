@@ -3,12 +3,11 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
-use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
+use kartik\bs5dropdown\Dropdown;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use app\assets\AppAsset;
+use yii\bootstrap5\Breadcrumbs;
+use diecoding\toastr\ToastrFlash;
 
 AppAsset::register($this);
 
@@ -18,66 +17,57 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
+
+ToastrFlash::widget([
+    'positionClass' => 'toast-bottom-right'
+]);
+
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
-<head>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>" class="h-100">
+    <head>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+        <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/feather-icons"></script>
+    </head>
+    <body class="d-flex flex-row h-100 align-items-stretch">
+    <?php $this->beginBody() ?>
 
-<header id="header">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
-    NavBar::end();
-    ?>
-</header>
-
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <div id="sidebar">
+        <?= $this->render('sidebar', [
+            'items' => [
+                Yii::t('app', 'Advanced') => [
+                    ['url' => '/user/admin', 'label' => Yii::t('app', 'Users'), 'icon' => 'user', 'active' => @substr_compare(Yii::$app->controller->route, 'user', 0, strlen('user'))==0],
+                    ['url' => '/settings/index', 'label' => Yii::t('settings', 'Settings'), 'icon' => 'settings', 'active' => Yii::$app->controller->id === 'settings']
+                ]
+            ]
+        ]); ?>
     </div>
-</main>
+    <div class="wrapper d-flex flex-column flex-nowrap h-100 overflow-scroll w-100">
+        <?= $this->render('header'); ?>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-        </div>
+        <main id="main" class="flex-shrink-0 align-self-stretch" role="main">
+            <div class="container-fluid py-2 h-100 bg-secondary-subtle">
+                <div class="card py-2 rounded-4 shadow-sm">
+                    <?php if (!empty($this->params['breadcrumbs'])): ?>
+                        <div class="breadcrumb-wrapper ms-3">
+                            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]); ?>
+                        </div>
+                    <?php endif ?>
+                    <?= $content ?>
+                </div>
+            </div>
+        </main>
     </div>
-</footer>
 
-<?php $this->endBody() ?>
-</body>
-</html>
+    <?php $this->endBody() ?>
+    <script>
+        feather.replace()
+    </script>
+    </body>
+
+    </html>
 <?php $this->endPage() ?>

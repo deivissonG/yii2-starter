@@ -1,0 +1,36 @@
+<?php
+
+return [
+    'Welcome!' => 'Bem vindo!',
+    'Mark all as read' => 'Marcar todas como lidas',
+    'Internal Error.' => 'Erro interno;',
+    'Successfully saved.' => 'Cadastro salvo com sucesso.',
+    'Successfully Updated.' => 'Cadastro atualizado com sucesso.',
+    'Successfully Deleted.' => 'Cadastro excluído com sucesso.',
+    'Export' => 'Exportar',
+    'The requested page does not exist.' => 'A página requisitada não existe.',
+    'Back' => 'Voltar',
+    'Continue' => 'Continuar',
+    'Save' => 'Salvar',
+    'Exit' => 'Sair',
+    'User' => 'Usuário',
+    'Users' => 'Usuários',
+    'Username or email' => 'Usuário ou e-mail',
+    'Add' => 'Adicionar',
+    'Reset' => 'Limpar filtro',
+    'Select' => 'Selecione',
+    'Basic Info' => 'Informações básicas',
+    'Record Info' => 'Informações do registro',
+    'Active' => 'Ativo',
+    'Inactive' => 'Inativo',
+    'active' => 'ativo',
+    'inactive' => 'inativo',
+
+    /* MENus */
+    'Advanced' => 'Avançado',
+    'Products' => 'Produtos',
+    'Customers' => 'Clientes',
+    'Dashboard' => 'Página inicial',
+    'Orders' => 'Pedidos',
+    'Basic Forms' => 'Cadastros básicos',
+];
